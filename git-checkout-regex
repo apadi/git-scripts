@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import argparse
+import os
 import subprocess
 from gitutils import filter_changes
 
@@ -19,7 +20,10 @@ def main():
                         help='filter regular expression')
     args = parser.parse_args()
 
-    subprocess.call(['git', 'checkout'] + filter_changes(args.regex[0], args.ignore_untracked))
+    project_root = subprocess.check_output(['git', 'root']).strip()
+    files = [os.path.join(project_root, i) for i in
+             filter_changes(args.regex[0], args.ignore_untracked)]
+    subprocess.call(['git', 'checkout'] + files)
 
 
 if __name__ == '__main__':
