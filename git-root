@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Clone of the mercurial 'hg root' command
+
+git rev-parse --show-toplevel
